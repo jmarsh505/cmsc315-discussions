@@ -25,7 +25,15 @@ from copy import copy, deepcopy
 # Replace the pass statement with your implementation.
 
 class ParentClass:
-    pass
+    category = "General Student" # Class variable
+
+    def __init__(self, name, age):
+        # Instance variables
+        self.name = name
+        self.age = age
+
+    def display_info(self):
+        return f"Name: {self.name}, Age: {self.age}, Category: {ParentClass.category}"
 
 
 # TODO 2:
@@ -41,8 +49,18 @@ class ParentClass:
 # Replace the pass statement with your implementation.
 
 class ChildClass(ParentClass):
-    pass
+    # New class variable
+    category = "Advanced Student"
 
+    def __init__(self, name, age, major, year):
+        super().__init__(name, age) # Call the parent constructor
+
+        # New instance variables
+        self.major = major
+        self.year = year
+
+    def display_info(self):
+        return f"Name: {self.name}, Age: {self.age}, Major: {self.major}, Year: {self.year}, Category: {ChildClass.category}"
 
 # TODO 3:
 # Create a function that demonstrates class namespaces and instance namespaces.
@@ -57,7 +75,26 @@ class ChildClass(ParentClass):
 
 def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
+
+    #Create two objects of the child class
+    student1 = ChildClass("Alice", 20, "Computer Science", "Sophomore")
+    student2 = ChildClass("Bob", 22, "Mathematics", "Senior")
+
+    #Access class variable through the class itself
+    print(f"Class variable accessed through class: {ChildClass.category}")
+
+    #Access class variable through an object
+    print(f"Class variable accessed through object: {student1.category}")
+
+    #Add a new attribute to only one object after it is created
+    student1.gpa = 3.8
+
+    #Display each object's namespace using __dict__
+    print(f"Student 1 namespace: {student1.__dict__}")
+    print(f"Student 2 namespace: {student2.__dict__}")
+
+    #Display information about the class namespace
+    print(f"Class namespace: {ChildClass.__dict__}")
 
 
 # TODO 4:
@@ -73,7 +110,32 @@ def demonstrate_namespaces():
 
 def demonstrate_copying():
     print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
+
+    #Original object with nested mutable data
+    original = {
+        "name": "Charlie",
+        "grades": [90, 85, 92]
+    }
+
+    #Create a shallow copy
+    shallow_copy = copy(original)
+
+    #Create a deep copy
+    deep_copy = deepcopy(original)
+
+    print("\nBefore modifying the original object's nested data:")
+    print(f"Original object: {original}")
+    print(f"Shallow copy: {shallow_copy}")
+    print(f"Deep copy: {deep_copy}")
+
+    #Modify the original object's nested data
+    original["grades"].append(95)
+
+    print("\nAfter modifying the original object's nested data:")
+    print(f"Original object: {original}")
+    print(f"Shallow copy: {shallow_copy}")  # Shallow copy reflects the change because it shares the same reference to the nested list.
+    print(f"Deep copy: {deep_copy}")  # Deep copy does not reflect the change because it has its own copy of the nested list.
+
 
 
 # TODO 5:
@@ -89,10 +151,20 @@ def demonstrate_copying():
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
-    print("\nTODO: Create and test your parent object")
+    print("\nCreating ParentClass object:")
+    # Create an object from the parent class
+    parent_obj = ParentClass("David", 30)
+    print(parent_obj.display_info())
 
-    print("\nTODO: Create and test your child object")
+    #Create an object from the child class
+    print("\nCreating ChildClass object:")
+    child_obj = ChildClass("Eve", 21, "Physics", "Junior")
+    print(child_obj.display_info())
 
+    #Demonstrate inheritance by calling methods
+    print("\nDemonstrating inheritance:")
+    print(f"ParentClass method called from child object: {child_obj.display_info()}")
+    
     demonstrate_namespaces()
     demonstrate_copying()
 
