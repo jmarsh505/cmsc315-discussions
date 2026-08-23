@@ -28,7 +28,10 @@ All assignment challenges completed, all stack and queue functions work, includi
 
 If you'd like to change the values of the stack or queue, modify the values of:
 
+
 stack_values = []     # Line 86
+
+
 queue_values = []     # Line 128
 
 
