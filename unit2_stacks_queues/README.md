@@ -2,35 +2,47 @@
 
 ## Overview
 
-This assignment explores two fundamental linear data structures:
+This assignment explored two fundamental linear data structures:
 
 - Stack (LIFO)
 - Queue (FIFO)
 
-## Learning Objectives
+- Stack:
+  - Implemented class Stack:
+    - Initialize a list that stores the values in the stack.
+    - Push function for LIFO behavior.
+    - Pop function for displaying and removing the top value on the stack.
+    - Peek function for viewing the top value on the stack.
+    - is_empty function to identify if the stack is empty
 
-- Implement stack operations
-- Implement queue operations
-- Understand LIFO and FIFO behavior
-- Create edge cases
 
-## Requirements
+  - Queue
+    - Implemented class Queue:
+      - Deque function for removal from the front of the que
+      - Enqueue function adds new values at the back, supporting FIFO behavior.
+      - Front function for showing the front of the queue without removing.
+      - is_empty function to identify if the queue is empty.
 
-Complete all TODO sections:
 
-1. Implement stack operations.
-2. Implement queue operations.
-3. Demonstrate LIFO behavior.
-4. Demonstrate FIFO behavior.
-5. Create and test edge cases.
-6. Create a real-world scenario.
+All assignment challenges completed, all stack and queue functions work, including errors.
 
-## Discussion Board Reflection
+If you'd like to change the values of the stack or queue, modify the values of:
 
-After completing the programming assignment, add this reflection to your initial discussion post in LEO.
+
+stack_values = []     # Line 86
+
+
+queue_values = []     # Line 128
+
 
 Your reflection should be approximately 150–200 words and address the following questions:
 
 1. What concepts or skills did you learn while completing this assignment?
 2. What challenges did you encounter, and how did you overcome them?
 3. Explain the differences between stacks and queues as this relates to real-world applications.
+
+
+
+
+
+
