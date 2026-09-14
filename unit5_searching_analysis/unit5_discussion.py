@@ -16,84 +16,108 @@ and program output.
 
 def linear_search(lst, target):
     """
-    TODO (Student):
-    Implement a linear search algorithm.
-
-    Requirements:
-    - Search the list from beginning to end.
-    - Return the index if the target is found.
-    - Return -1 if the target is not found.
-    - Add comments explaining why linear search
-      has O(n) time complexity.
+    Searches through the list from beginning to end.
+    Returns the index of the target if found, or -1 if not found.
     """
-    pass
+
+    # Linear search checks each item one at a time.
+    # In the worst case, every element must be checked.
+    # Therefore, linear search has O(n) time complexity.
+    for i in range(len(lst)):
+        if lst[i] == target:
+            return i
+
+    return -1
 
 
 def binary_search(lst, target):
     """
-    TODO (Student):
-    Implement a binary search algorithm.
-
-    Requirements:
-    - Assume the list is already sorted.
-    - Repeatedly reduce the search space by half.
-    - Return the index if the target is found.
-    - Return -1 if the target is not found.
-    - Add comments explaining how each iteration
-      reduces the search space.
+    Searches a sorted list using binary search.
+    Returns the index of the target if found, or -1 if not found.
     """
-    pass
+
+    low = 0
+    high = len(lst) - 1
+
+    while low <= high:
+        middle = (low + high) // 2
+
+        if lst[middle] == target:
+            return middle
+
+        # If the target is greater than the middle value,
+        # eliminate the lower half of the search space.
+        elif target > lst[middle]:
+            low = middle + 1
+
+        # Otherwise, eliminate the upper half.
+        # Each iteration reduces the search space by about half.
+        else:
+            high = middle - 1
+
+    return -1
 
 
 def main():
     print("=== UNIT 5: SEARCH ALGORITHMS ===")
 
     # ===============================
-    # TODO (Student): SMALL DATASET
+    # SMALL DATASET
     # ===============================
-    #
-    # Requirements:
-    # 1. Create a small sorted dataset.
-    # 2. Test both linear search and binary search.
-    # 3. Search for:
-    #    - a value that exists
-    #    - a value that does not exist
-    # 4. Use comments to clearly explain the results.
 
     print("\n=== SMALL DATASET TEST ===")
-    print("TODO: Create a small dataset and test both searches.")
+
+    small_list = [10, 20, 30, 40, 50]
+
+    # 30 exists at index 2.
+    print("Linear search for 30:", linear_search(small_list, 30))
+    print("Binary search for 30:", binary_search(small_list, 30))
+
+    # 60 does not exist, so both searches return -1.
+    print("Linear search for 60:", linear_search(small_list, 60))
+    print("Binary search for 60:", binary_search(small_list, 60))
 
     # ===============================
-    # TODO (Student): LARGE DATASET
+    # LARGE DATASET
     # ===============================
-    #
-    # Requirements:
-    # 1. Create a much larger sorted dataset.
-    # 2. Test both search algorithms.
-    # 3. Compare the results.
-    # 4. Use comments to explain why binary search becomes more
-    #    efficient as datasets grow larger.
 
     print("\n=== LARGE DATASET TEST ===")
-    print("TODO: Create a larger dataset and compare results.")
+
+    large_list = list(range(1, 10001))
+
+    # Search for a value near the end of the list.
+    print("Linear search for 9999:", linear_search(large_list, 9999))
+    print("Binary search for 9999:", binary_search(large_list, 9999))
+
+    # Both algorithms return the same index.
+    # However, linear search may have to examine almost every
+    # element, while binary search repeatedly cuts the search
+    # area in half. This makes binary search much more efficient
+    # as the dataset becomes larger.
 
     # ===============================
-    # TODO (Student): EDGE CASES
+    # EDGE CASES
     # ===============================
-    #
-    # Demonstrate at least two edge cases.
-    #
-    # Example ideas:
-    # - Empty list
-    # - Single-element list
-    # - Value not present
-    # - Value at the first position
-    # - Value at the last position
-    #
-    # Explain what happens in each case.
 
     print("\n=== EDGE CASE TESTS ===")
-    print("TODO: Demonstrate and explain edge cases.")
+
+    # Edge case 1: An empty list contains no values.
+    # Both algorithms should return -1.
+    empty_list = []
+
+    print("Linear search empty list:",
+          linear_search(empty_list, 10))
+    print("Binary search empty list:",
+          binary_search(empty_list, 10))
+
+    # Edge case 2: Search a single-element list.
+    # Since 5 is present, both searches return index 0.
+    single_list = [5]
+
+    print("Linear search single-element list:",
+          linear_search(single_list, 5))
+    print("Binary search single-element list:",
+          binary_search(single_list, 5))
 
 
 if __name__ == "__main__":
