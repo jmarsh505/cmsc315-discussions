@@ -2,116 +2,153 @@
 ===========================================================
 UNIT 7 DISCUSSION: SORTING ALGORITHMS (BUBBLE SORT VS MERGE SORT)
 ===========================================================
-
-STUDENT INSTRUCTIONS:
-
-This project explores two fundamental sorting algorithms:
-- Bubble Sort (iterative, comparison-based)
-- Merge Sort (recursive, divide-and-conquer)
-
-Your goal is to demonstrate both your coding ability and your
-understanding of algorithm efficiency and behavior.
 """
 
 
 def bubble_sort(lst):
     """
-    TODO (Student):
-    Implement Bubble Sort.
-
-    Requirements:
-    - Create a copy of the original list.
-    - Compare adjacent elements.
-    - Swap elements when they are out of order.
-    - Continue until the list is sorted.
-    - Return the sorted list.
-    - Add meaningful comments.
-
+    Sorts a list using the Bubble Sort algorithm.
     """
-    pass
+
+    # Create a copy so the original list is not changed
+    sorted_list = lst.copy()
+
+    # Repeat through the list
+    for i in range(len(sorted_list) - 1):
+
+        # Track whether any swaps happened during this pass
+        swapped = False
+
+        # Compare neighboring values
+        for j in range(len(sorted_list) - 1 - i):
+
+            # Swap the values if they are in the wrong order
+            if sorted_list[j] > sorted_list[j + 1]:
+                sorted_list[j], sorted_list[j + 1] = (
+                    sorted_list[j + 1],
+                    sorted_list[j]
+                )
+                swapped = True
+
+        # If no swaps happened, the list is already sorted
+        if not swapped:
+            break
+
+    return sorted_list
 
 
 def merge_sort(lst):
     """
-    TODO (Student):
-    Implement Merge Sort.
-
-    Requirements:
-    - Use recursion.
-    - Divide the list into smaller halves.
-    - Sort each half recursively.
-    - Merge the sorted halves together.
-    - Return the sorted list.
-    - Add meaningful comments.
-
+    Sorts a list using the recursive Merge Sort algorithm.
     """
-    pass
+
+    # Base case: a list with 0 or 1 values is already sorted
+    if len(lst) <= 1:
+        return lst.copy()
+
+    # Find the middle of the list
+    middle = len(lst) // 2
+
+    # Divide the list into two halves
+    left = lst[:middle]
+    right = lst[middle:]
+
+    # Recursively sort each half
+    sorted_left = merge_sort(left)
+    sorted_right = merge_sort(right)
+
+    # Merge the two sorted halves
+    return merge(sorted_left, sorted_right)
 
 
 def merge(left, right):
     """
-    TODO (Student):
-    Implement the merge step used by Merge Sort.
-
-    Requirements:
-    - Compare values from the left and right lists.
-    - Build a new sorted result list.
-    - Append any remaining values.
-    - Return the merged sorted list.
-    - Add meaningful comments.
+    Combines two sorted lists into one sorted list.
     """
-    pass
+
+    result = []
+
+    # Indexes used to move through both lists
+    i = 0
+    j = 0
+
+    # Compare values from the left and right lists
+    while i < len(left) and j < len(right):
+
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    # Add any values remaining in the left list
+    while i < len(left):
+        result.append(left[i])
+        i += 1
+
+    # Add any values remaining in the right list
+    while j < len(right):
+        result.append(right[j])
+        j += 1
+
+    return result
 
 
 def main():
     print("=== UNIT 7: SORTING ALGORITHMS ===")
 
     # ===============================
-    # TODO (Student): DATASET #1
+    # DATASET #1
     # ===============================
-    #
-    # Requirements:
-    # 1. Create an unsorted list containing at least 7 values.
-    # 2. Display the original list.
-    # 3. Sort the list using Bubble Sort.
-    # 4. Sort the same list using Merge Sort.
-    # 5. Clearly label and display all results.
 
     print("\n=== DATASET #1 ===")
-    print("TODO: Create an unsorted dataset and test both sorting algorithms.")
+
+    dataset1 = [42, 17, 8, 63, 25, 91, 34]
+
+    print("Original List:", dataset1)
+    print("Bubble Sort:", bubble_sort(dataset1))
+    print("Merge Sort:", merge_sort(dataset1))
 
     # ===============================
-    # TODO (Student): DATASET #2
+    # DATASET #2
     # ===============================
-    #
-    # Requirements:
-    # 1. Create a second dataset.
-    # 2. Use different values than Dataset #1.
-    # 3. Sort using both algorithms.
-    # 4. Compare the results.
 
     print("\n=== DATASET #2 ===")
-    print("TODO: Create a second dataset and compare sorting results.")
+
+    dataset2 = [75, 12, 56, 3, 88, 29, 41, 19]
+
+    print("Original List:", dataset2)
+    print("Bubble Sort:", bubble_sort(dataset2))
+    print("Merge Sort:", merge_sort(dataset2))
+
+    # Compare the results from both algorithms
+    if bubble_sort(dataset2) == merge_sort(dataset2):
+        print("Both algorithms produced the same sorted result.")
 
     # ===============================
-    # TODO (Student): EDGE CASES
+    # EDGE CASES
     # ===============================
-    #
-    # Demonstrate at least two edge cases.
-    #
-    # Example ideas:
-    # - Empty list
-    # - Already sorted list
-    # - Reverse-sorted list
-    # - List with duplicate values
-    # - Single-element list
-    #
-    # Explain what happens in each case.
 
     print("\n=== EDGE CASE TESTS ===")
-    print("TODO: Demonstrate and explain edge cases.")
 
+    # Edge Case 1: Empty list
+    empty_list = []
 
+    print("\nEmpty List:")
+    print("Original:", empty_list)
+    print("Bubble Sort:", bubble_sort(empty_list))
+    print("Merge Sort:", merge_sort(empty_list))
+    print("Both algorithms return an empty list because there are no values to sort.")
+
+    # Edge Case 2: List with duplicate values
+    duplicate_list = [5, 2, 5, 1, 2, 8, 5]
+
+    print("\nList With Duplicates:")
+    print("Original:", duplicate_list)
+    print("Bubble Sort:", bubble_sort(duplicate_list))
+    print("Merge Sort:", merge_sort(duplicate_list))
+    print("Duplicate values are kept and placed in their correct sorted positions.")
 
 
 if __name__ == "__main__":
