@@ -3,13 +3,8 @@
 UNIT 8 DISCUSSION: BREADTH-FIRST SEARCH (BFS)
 ===========================================================
 
-STUDENT INSTRUCTIONS:
-
-This assignment is designed to help you understand how graphs
-are traversed using Breadth-First Search (BFS) and how this
-applies to real-world systems (e.g., networks, routes,
-social connections).
-
+This program demonstrates Breadth-First Search using a simple
+graph that represents locations connected by roads.
 ===========================================================
 """
 
@@ -18,74 +13,103 @@ from collections import deque
 
 def bfs(graph, start):
     """
-    TODO (Student):
-    Implement Breadth-First Search (BFS).
-
-    Requirements:
-    - Use a queue to manage traversal order.
-    - Track visited nodes to prevent revisiting nodes.
-    - Visit nodes level by level.
-    - Return the order in which nodes were visited.
-
-    Add comments explaining:
-    - Why a queue is used.
-    - Why neighbors are added to the queue.
-    - How BFS differs from depth-first traversal.
+    Performs Breadth-First Search on a graph and returns
+    the order in which the nodes are visited.
     """
 
-    pass
+    # If the starting node does not exist, return an empty list.
+    if start not in graph:
+        return []
+
+    # A set keeps track of nodes that have already been visited.
+    visited = set()
+
+    # A queue is used because BFS visits nodes in the order
+    # they are discovered. The first node added is the first removed.
+    queue = deque([start])
+
+    # Stores the final traversal order.
+    traversal_order = []
+
+    while queue:
+        current = queue.popleft()
+
+        if current not in visited:
+            visited.add(current)
+            traversal_order.append(current)
+
+            # Neighbors are added to the queue so BFS can visit
+            # all nearby nodes before moving farther away.
+            for neighbor in graph[current]:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+
+    # BFS explores level by level, while depth-first search (DFS)
+    # follows one path as deeply as possible before backtracking.
+    return traversal_order
 
 
 def main():
     print("=== UNIT 8: BREADTH-FIRST SEARCH ===")
 
-    # ===============================
-    # TODO (Student): CREATE A GRAPH
-    # ===============================
-    #
-    # Requirements:
-    # 1. Create a graph using an adjacency list.
-    # 2. Include at least 6 nodes.
-    # 3. Include multiple connections between nodes.
-    # 4. Clearly display the graph structure.
-    # 5. Use comments to explain what the nodes and edges represent.
+    # This graph represents cities connected by roads.
+    # Each city is a node, and each road is an edge.
+    graph = {
+        "A": ["B", "C"],
+        "B": ["A", "D", "E"],
+        "C": ["A", "F"],
+        "D": ["B"],
+        "E": ["B", "F"],
+        "F": ["C", "E"]
+    }
 
     print("\n=== GRAPH STRUCTURE ===")
-    print("TODO: Create and display a graph.")
+
+    # Display each node and its connected neighbors.
+    for node, neighbors in graph.items():
+        print(node, "->", neighbors)
 
     # ===============================
-    # TODO (Student): BFS TRAVERSAL
+    # BFS TRAVERSAL
     # ===============================
-    #
-    # Requirements:
-    # 1. Select a starting node.
-    # 2. Perform BFS traversal.
-    # 3. Display the traversal order.
-    # 4. Use comments to explain how BFS visits nodes level by level.
-    # 5. Add at least one additional node or edge
-    #    and demonstrate the updated traversal.
 
     print("\n=== BFS TRAVERSAL ===")
-    print("TODO: Perform and explain BFS traversal.")
+
+    start_node = "A"
+
+    # Starting at A, BFS first visits A, then its immediate
+    # neighbors, and then nodes that are farther away.
+    result = bfs(graph, start_node)
+
+    print("Starting node:", start_node)
+    print("BFS traversal:", result)
+
+    # Add a new node and edge to the graph.
+    # G is connected to C.
+    graph["G"] = ["C"]
+    graph["C"].append("G")
+
+    print("\nAfter adding node G connected to C:")
+    updated_result = bfs(graph, start_node)
+    print("Updated BFS traversal:", updated_result)
 
     # ===============================
-    # TODO (Student): EDGE CASES
+    # EDGE CASE TESTS
     # ===============================
-    #
-    # Demonstrate at least two edge cases.
-    #
-    # Example ideas:
-    # - Start from a different node
-    # - Use a disconnected graph
-    # - Handle a missing start node safely
-    # - Graph containing only one node
-    # - Empty graph
-    #
-    # Explain what happens in each case.
 
     print("\n=== EDGE CASE TESTS ===")
-    print("TODO: Demonstrate and explain edge cases.")
 
+    # Edge Case 1:
+    # Start BFS from a different node.
+    # The traversal still works, but the visiting order changes.
+    print("\nEdge Case 1: Start from node E")
+    print("Traversal:", bfs(graph, "E"))
+
+    # Edge Case 2:
+    # Attempt to start from a node that does not exist.
+    # The bfs function safely returns an empty list.
+    print("\nEdge Case 2: Missing starting node")
+    print("Traversal:", bfs(graph, "Z"))
 
 
 if __name__ == "__main__":
